@@ -9,9 +9,13 @@ import categoryRoute from "./routes/categoryRoute.js";
 import deviceRoute from "./routes/deviceRoute.js";
 import modelRoute from "./routes/modelRoute.js";
 
+import job from "./config/cron.js";
+
 dotenv.config();
 
 const app = express();
+
+if(process.env.NODE_ENV==="production") job.start();
 
 app.use(rateLimiter);
 
@@ -28,6 +32,9 @@ app.get("/health", (req, res) => {
     res.send("Funcionadndo!!!");
 });
 
+app.get("/api/health", (req, res) => {
+    res.status(200).json({status: "OK!"});
+});
 //Rotas
 app.use("/api/transactions", transactionsRoute);
 app.use("/api/profile", userRoute);
