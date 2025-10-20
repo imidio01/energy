@@ -3,28 +3,28 @@ import { sql } from "../config/db.js";
 export async function createDevice(req, res) {
     const {
         name,
-        brand,
-        model,
+        brand_id,
+        model_id,
         category_id,
         type,
         power_watts,
         voltage_volts,
         current_amperes,
         location,
-        responsible_person,
+        userid,
         installation_date,
         status
     } = req.body;
     try {
         const result = await sql`
         INSERT INTO devices (
-            name, brand, model, category_id, type,
+            name, brand_id, model_id, category_id, type,
             power_watts, voltage_volts, current_amperes, location,
-            responsible_person, installation_date, status
+            userid, installation_date, status
         ) VALUES (
-            ${name}, ${brand}, ${model}, ${category_id}, ${type},
+            ${name}, ${brand_id}, ${model_id}, ${category_id}, ${type},
             ${power_watts}, ${voltage_volts}, ${current_amperes}, ${location},
-            ${responsible_person}, ${installation_date}, ${status}
+            ${userid}, ${installation_date}, ${status}
         ) RETURNING *
         `;
         res.json(result[0]);
