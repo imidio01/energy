@@ -19,6 +19,21 @@ export async function getTransactionsByUserId(req, res) {
     }
 }
 
+export async function getTransactionsDetails(req, res) {
+        try {
+            const { deviceId } = req.params;
+            const devices = await sql`
+            SELECT * FROM devices WHERE id = ${deviceId} limit 1
+        `;
+            console.log("Data:", devices);
+
+            res.status(200).json(devices); // ✅ corrected
+        } catch (error) {
+            console.error("Erro buscando dados:", error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }
+}
+
 export async function createTransaction(req, res) {
     try {
 

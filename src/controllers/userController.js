@@ -3,11 +3,11 @@ import { sql } from "../config/db.js";
 export async function createUserProfile(req, res) {
     try {
         const { user_id, name, location, type } = req.body;
+        console.log("_id: ", user_id);
         await sql`
             INSERT INTO profile (user_id, name, location, type)
             VALUES (${user_id}, ${name}, ${location}, ${type})
             `;
-
         res.status(201).json({ message: "Profile created successfully" });
     } catch (error) {
         res.status(500).json({ error: "Error creating profile" });
