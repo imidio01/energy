@@ -164,8 +164,8 @@ export async function getSummaryByUserId(req, res) {
             // ou faturamento baseado em produção
             incomeResult = await sql`
                 SELECT 
-                    COALESCE(SUM((generation_watts * ${hours}) / 1000 * ${pricePerKwh}), 0) AS income_mt
-                FROM energy_sources
+                    COALESCE(SUM((power_watts * ${hours}) / 1000 * ${pricePerKwh}), 0) AS income_mt
+                FROM devices
                 WHERE userid = ${userId}
             `;
 
@@ -188,8 +188,8 @@ export async function getSummaryByUserId(req, res) {
             income_mt: incomeResult.income_mt ?? incomeResult[0]?.income_mt ?? 0,
             balance_mt: balanceResult.balance_mt,
             balance: consumptionResult[0]?.consumption_kwh ? consumptionResult[0]?.consumption_kwh : 0,
-            income: incomeResult[0]?.income ?? 0, 
-            expenses: expensesResult[0].expenses
+            income: expensesResult[0].expenses_mt, 
+            expenses: consumptionResult[0]?.consumption_kwh ? consumptionResult[0]?.consumption_kwh : 0
         });
 
     } catch (error) {
