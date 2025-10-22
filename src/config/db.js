@@ -8,7 +8,7 @@ export const sql = neon(process.env.DATABASE_URL)
 
 export async function initDB() {
     try {
-        
+
         await sql`
             CREATE TABLE IF NOT EXISTS profile(
                 id SERIAL PRIMARY KEY,
@@ -78,11 +78,17 @@ export async function initDB() {
                 created_at DATE NOT NULL DEFAULT CURRENT_DATE
             )
         `
-
+        await sql`
+            CREATE TABLE IF NOT EXISTS configurations (
+                id SERIAL PRIMARY KEY,
+                price_per_kwh_dom DECIMAL(10, 2) NOT NULL,
+                price_per_kwh_gen DECIMAL(10, 2) NOT NULL,
+                created_at DATE NOT NULL DEFAULT CURRENT_DATE
+            )`;
         console.log("Database initialized successfully");
 
     } catch (error) {
         console.log("Error Initializing DB", error);
         process.exit(1);
     }
-}
+} 

@@ -8,6 +8,7 @@ import brandRoute from "./routes/brandRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import deviceRoute from "./routes/deviceRoute.js";
 import modelRoute from "./routes/modelRoute.js";
+import configurationRoute from "./routes/configurationRoute.js"
 
 import job from "./config/cron.js";
 
@@ -42,6 +43,7 @@ app.use("/api/brand", brandRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/device", deviceRoute);
 app.use("/api/model", modelRoute);
+app.use("/api/configuration", configurationRoute);
 
 initDB().then(() => {
     app.listen(PORT, () => {
