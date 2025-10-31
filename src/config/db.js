@@ -68,6 +68,7 @@ export async function initDB() {
             )
             `;
 
+
         await sql`
             CREATE TABLE IF NOT EXISTS transactions(
                 id SERIAL PRIMARY KEY,
@@ -78,6 +79,7 @@ export async function initDB() {
                 created_at DATE NOT NULL DEFAULT CURRENT_DATE
             )
         `
+        
         await sql`
             CREATE TABLE IF NOT EXISTS configurations (
                 id SERIAL PRIMARY KEY,
